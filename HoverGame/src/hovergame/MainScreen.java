@@ -3,7 +3,7 @@
  * create a game where people have to keep a point in a range, but they lose 
  * points every time they look at the point
  */
-
+package hovergame;
 /**
  *
  * @author Aditi
@@ -39,7 +39,7 @@ public class MainScreen extends JFrame implements ActionListener{
     static boolean x1visible = false;
     static boolean x2visible = false;
     static boolean x3visible = false;
-    static int score =0;
+    static int score =-900;
 
     private boolean running = true;
     private boolean scheduled = false;
@@ -65,12 +65,12 @@ public class MainScreen extends JFrame implements ActionListener{
         add(instructions);
 
         JPanel game1 = new JPanel(){
-                public void paintComponent(Graphics g){
-                    if (x1visible)
-                        g.drawOval(x1, Y, DIAMETER, DIAMETER);
-                    g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
-                }
-            };
+            public void paintComponent(Graphics g){
+                if (x1visible)
+                    g.drawOval(x1, Y, DIAMETER, DIAMETER);
+                g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
+            }
+        };
         game1.addMouseListener(new MyMouseListener(1,this));
         add(game1);
         JPanel game2 = new JPanel(){
@@ -90,7 +90,6 @@ public class MainScreen extends JFrame implements ActionListener{
                 }
             };
         game3.addMouseListener(new MyMouseListener(3,this));
-
         add(game3);
 
         JPanel endPanel = new JPanel();
@@ -142,13 +141,12 @@ public class MainScreen extends JFrame implements ActionListener{
                 System.out.println("there was an error");
                 System.exit(0);
             }
-            if (score>-1000)
+            if (score<-1000)
             {
-                int[] curTime = s.getTime();
-                System.out.println(curTime[0] + " : " + curTime[1] + " : " + curTime[2] + " : " + curTime[3]);              
+                int[] curTime = s.getTime();            
                 s.stopThread();
                 running=false;
-                EndScreen end= new EndScreen(curTime[1] + " : " + curTime[2]);
+                EndScreen end= new EndScreen(curTime[1] + " minutes and " + curTime[2] + " seconds");
                 end.setVisible(true);
                 dispose();
             }
