@@ -1,7 +1,7 @@
 /*
- * Aditi Talati - 9th period T/Th - due May 28, 2018
- * Final Project - make a game of battleship that can be played over 
-                   multiple devices
+ * Aditi Talati - 1 July 2019
+ * create a game where people have to keep a point in a range, but they lose 
+ * points every time they look at the point
  */
 package hovergame;
 
@@ -16,7 +16,7 @@ import java.awt.event.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Random;
-public class MainScreen extends JFrame {
+public class MainScreen extends JFrame implements ActionListener{
     private static int size = 50;
     public static final int WIDTH = 500;
     public static final int HEIGHT = 500;
@@ -26,6 +26,7 @@ public class MainScreen extends JFrame {
     public static final int TIME = 250;
     public static final int Y = 25;
     public static final int X = 250;
+    public static final int STEPSIZE = 10;
     
     public static final int BOX_X = 150;
     public static final int BOX_Y = 15;
@@ -33,18 +34,21 @@ public class MainScreen extends JFrame {
     public static final int BOX_WIDTH = 200;
     
     private int points = 0;
-    private int x1 = X;
-    private int x2 = X;
-    private int x3 = X;
-    private boolean x1visible = false;
-    private boolean x2visible = false;
-    private boolean x3visible = false;
+    int x1 = X;
+    int x2 = X;
+    int x3 = X;
+    boolean x1visible = true;
+    boolean x2visible = true;
+    boolean x3visible = true;
+    
+    private boolean running = true;
+    private boolean scheduled = false;
     
     public MainScreen(){
         super("Hover Game");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(4,1));
+        setLayout(new GridLayout(5,1));
         setBackground(BACKGROUND);
         
         JPanel instructions = new JPanel();
@@ -83,19 +87,34 @@ public class MainScreen extends JFrame {
             }
         };
         add(game3);
+        JButton end = new JButton("end");
+        end.addActionListener(this);
+        add(end);
         
         TimerTask task = new TimerTask()
         {
             public void run()
             {
                 Random rand = new Random();
-                x1 += rand.nextGaussian();
-                x2 += rand.nextGaussian();
-                x3 += rand.nextGaussian();
+                x1 += rand.nextGaussian()*STEPSIZE;
+                x2 += rand.nextGaussian()*STEPSIZE;
+                x3 += rand.nextGaussian()*STEPSIZE;
+                scheduled = false;
+                repaint();
             }    
         };
-        Timer repeat = new Timer();
-        repeat.schedule(task, TIME);
+        while (running){
+            if(!scheduled){
+                Timer t = new Timer();
+                t.schedule(task, TIME);
+                scheduled = true;
+            }
+        }
         
     }
+    public void actionPerformed(ActionEvent e){
+        running = false;
+    }
+    
+
 }
