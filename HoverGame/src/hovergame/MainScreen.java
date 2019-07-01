@@ -13,8 +13,6 @@ package hovergame;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Random;
 public class MainScreen extends JFrame implements ActionListener{
     private static int size = 50;

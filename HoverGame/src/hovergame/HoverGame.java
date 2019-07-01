@@ -18,6 +18,7 @@ public class HoverGame {
         MainScreen main = new MainScreen();
         main.setVisible(true);
         main.move();
+        
     }
     
 }
