@@ -30,7 +30,7 @@ public class MainScreen extends JFrame implements ActionListener{
     
     public static final int BOX_X = 150;
     public static final int BOX_Y = 15;
-    public static final int BOX_HEIGHT = 20;
+    public static final int BOX_HEIGHT = 30;
     public static final int BOX_WIDTH = 200;
     
     private int points = 0;
@@ -91,30 +91,24 @@ public class MainScreen extends JFrame implements ActionListener{
         end.addActionListener(this);
         add(end);
         
-        TimerTask task = new TimerTask()
-        {
-            public void run()
-            {
-                Random rand = new Random();
-                x1 += rand.nextGaussian()*STEPSIZE;
-                x2 += rand.nextGaussian()*STEPSIZE;
-                x3 += rand.nextGaussian()*STEPSIZE;
-                scheduled = false;
-                repaint();
-            }    
-        };
-        while (running){
-            if(!scheduled){
-                Timer t = new Timer();
-                t.schedule(task, TIME);
-                scheduled = true;
-            }
-        }
-        
     }
     public void actionPerformed(ActionEvent e){
         running = false;
     }
-    
+    public void move(){
+        Random rand = new Random();
+        while(running){
+            x1 += rand.nextGaussian()*STEPSIZE;
+            x2 += rand.nextGaussian()*STEPSIZE;
+            x3 += rand.nextGaussian()*STEPSIZE;
+            repaint();
+            try{
+                Thread.sleep(TIME);
+            }catch(Exception e){
+                System.out.println("there was an error");
+                System.exit(0);
+            }
+        }
+    }
 
 }
