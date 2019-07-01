@@ -27,10 +27,18 @@ public class MainScreen extends JFrame {
     public static final int Y = 25;
     public static final int X = 250;
     
+    public static final int BOX_X = 150;
+    public static final int BOX_Y = 15;
+    public static final int BOX_HEIGHT = 20;
+    public static final int BOX_WIDTH = 200;
+    
     private int points = 0;
     private int x1 = X;
     private int x2 = X;
     private int x3 = X;
+    private boolean x1visible = false;
+    private boolean x2visible = false;
+    private boolean x3visible = false;
     
     public MainScreen(){
         super("Hover Game");
@@ -53,32 +61,41 @@ public class MainScreen extends JFrame {
         
         JPanel game1 = new JPanel(){
             public void paintComponent(Graphics g){
-                g.drawOval(x1, Y, DIAMETER, DIAMETER);
+                if (x1visible)
+                    g.drawOval(x1, Y, DIAMETER, DIAMETER);
+                g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
             }
         };
         add(game1);
         JPanel game2 = new JPanel(){
             public void paintComponent(Graphics g){
-                g.drawOval(x2, Y, DIAMETER, DIAMETER);
+                if(x2visible)
+                    g.drawOval(x2, Y, DIAMETER, DIAMETER);
+                g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
             }
         };
         add(game2);
         JPanel game3 = new JPanel(){
             public void paintComponent(Graphics g){
-                g.drawOval(x3, Y, DIAMETER, DIAMETER);
+                if(x3visible)
+                    g.drawOval(x3, Y, DIAMETER, DIAMETER);
+                g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
             }
         };
         add(game3);
         
-        /*TimerTask task = new TimerTask()
+        TimerTask task = new TimerTask()
         {
             public void run()
             {
-                x1 += 
+                Random rand = new Random();
+                x1 += rand.nextGaussian();
+                x2 += rand.nextGaussian();
+                x3 += rand.nextGaussian();
             }    
         };
         Timer repeat = new Timer();
-        repeat.schedule(task, TIME);*/
+        repeat.schedule(task, TIME);
         
     }
 }
