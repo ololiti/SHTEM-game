@@ -13,51 +13,62 @@ import static hovergame.MainScreen.X;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-public class MyMouseListener {
+public class MyMouseListener implements MouseListener{
+    private int game;
+    private MainScreen m;
     
-    /*public MyMouseListe
+    public MyMouseListener(int i, MainScreen m){
+        //i is 1,2,or 3
+        game = i;
+        this.m = m;
+        
+    }
+    public void mouseReleased(MouseEvent e){}
+    public void mousePressed(MouseEvent e){}
+    
     public void mouseClicked(MouseEvent e) 
     { 
-        int xCurrent=e.getX(); 
-        if(xCurrent<=350 && xCurrent >= 150 && e.getY() == 50) x1=X;
+        switch(game){
+            case 1: MainScreen.x1 = X;
+                    break;
+            case 2: MainScreen.x2 = X;
+                    break;
+            case 3: MainScreen.x3 = X;
+                    break;
+        }
         
-        if(x2==xCurrent )x2= X;
-        
-        if(x3==xCurrent) x3=X;
-        
+        MainScreen.score -= 10;
+        m.repaint();
+        m.scoreArea.setText("score: " + m.score);
     }
 
-    public void mouseEntered(MouseEvent e){
-    
-        int xCurrent=e.getX(); 
-        if(x1==xCurrent)
+    public void mouseEntered(MouseEvent e){ 
+        if(game == 1)
+            MainScreen.x1visible=true;
         
-            x1visible=true;
+        if(game == 2)
+            MainScreen.x2visible=true;
         
-        if(x2==xCurrent)
-        
-            x2visible=true;
-        
-        if(x3==xCurrent)
-        
-            x3visible=true;
-        
+        if(game == 3)
+            MainScreen.x3visible=true;
+        MainScreen.score -= 1;
+        m.repaint();
+        m.scoreArea.setText("score: " + m.score);
     }
 
-    public void mouseExited(MouseEvent e) {
-    
-        int xCurrent=e.getX(); 
-        if(x1==xCurrent)
+    public void mouseExited(MouseEvent e) { 
+        if(game == 1)
         
-            x1visible=false;
+            m.x1visible=false;
         
-        if(x2==xCurrent)
+        if(game == 2)
         
-            x2visible=false;
+            m.x2visible=false;
         
-        if(x3==xCurrent)
+        if(game == 3)
         
-            x3visible=false;
-        
-    }*/
+            m.x3visible=false;
+        m.repaint();
+        m.scoreArea.setText("score: " + m.score);
+    }
 }

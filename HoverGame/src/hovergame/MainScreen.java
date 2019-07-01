@@ -34,15 +34,17 @@ public class MainScreen extends JFrame implements ActionListener{
     public static final int BOX_WIDTH = 200;
     
     private int points = 0;
-    int x1 = X;
-    int x2 = X;
-    int x3 = X;
-    boolean x1visible = true;
-    boolean x2visible = true;
-    boolean x3visible = true;
+    static int x1 = X;
+    static int x2 = X;
+    static int x3 = X;
+    static boolean x1visible = false;
+    static boolean x2visible = false;
+    static boolean x3visible = false;
+    static int score =0;
     
     private boolean running = true;
     private boolean scheduled = false;
+    JTextArea scoreArea;
     
     public MainScreen(){
         super("Hover Game");
@@ -70,6 +72,7 @@ public class MainScreen extends JFrame implements ActionListener{
                 g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
             }
         };
+        game1.addMouseListener(new MyMouseListener(1,this));
         add(game1);
         JPanel game2 = new JPanel(){
             public void paintComponent(Graphics g){
@@ -78,6 +81,7 @@ public class MainScreen extends JFrame implements ActionListener{
                 g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
             }
         };
+        game2.addMouseListener(new MyMouseListener(2,this));
         add(game2);
         JPanel game3 = new JPanel(){
             public void paintComponent(Graphics g){
@@ -86,10 +90,23 @@ public class MainScreen extends JFrame implements ActionListener{
                 g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
             }
         };
+        game3.addMouseListener(new MyMouseListener(3,this));
+        
         add(game3);
+        
+        JPanel endPanel = new JPanel();
+        endPanel.setBackground(BACKGROUND);
+        endPanel.setLayout(new FlowLayout());
+        
         JButton end = new JButton("end");
         end.addActionListener(this);
-        add(end);
+        endPanel.add(end);
+        
+        scoreArea = new JTextArea();
+        scoreArea.setText("score: " + score);
+        scoreArea.setEditable(false);
+        endPanel.add(scoreArea);
+        add(endPanel);
         
     }
     public void actionPerformed(ActionEvent e){
@@ -98,10 +115,25 @@ public class MainScreen extends JFrame implements ActionListener{
     public void move(){
         Random rand = new Random();
         while(running){
-            x1 += rand.nextGaussian()*STEPSIZE;
-            x2 += rand.nextGaussian()*STEPSIZE;
-            x3 += rand.nextGaussian()*STEPSIZE;
+            x1 += rand.nextInt(2*STEPSIZE)-STEPSIZE;
+            x2 += rand.nextInt(2*STEPSIZE)-STEPSIZE;
+            x3 += rand.nextInt(2*STEPSIZE)-STEPSIZE;
             repaint();
+            if(x1 >= 350 || x1<= 150){
+                score -= 100;
+                x1 = X;
+                repaint();
+            }
+            if(x2 >= 350 || x2<= 150){
+                score -= 100;
+                x2 = X;
+                repaint();
+            }
+            if(x3 >= 350 || x3<= 150){
+                score -= 100;
+                x3 = X;
+                repaint();
+            }
             try{
                 Thread.sleep(TIME);
             }catch(Exception e){
