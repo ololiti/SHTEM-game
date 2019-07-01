@@ -15,7 +15,8 @@ public class HoverGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        MainScreen main = new MainScreen();
+        main.setVisible(true);
     }
     
 }
