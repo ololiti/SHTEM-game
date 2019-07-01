@@ -8,6 +8,7 @@ package hovergame;
 /**
  *
  * @author Aditi
+ * @version 7/1/19
  */
 import java.awt.*;
 import javax.swing.*;
@@ -15,7 +16,7 @@ import java.awt.event.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Random;
-public class MainScreen extends JFrame{
+public class MainScreen extends JFrame implements MouseListener{
     private static int size = 50;
     public static final int WIDTH = 500;
     public static final int HEIGHT = 500;
