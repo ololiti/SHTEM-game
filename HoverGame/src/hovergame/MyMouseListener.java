@@ -37,7 +37,7 @@ public class MyMouseListener implements MouseListener{
                     break;
         }
         
-        MainScreen.score -= 10;
+        MainScreen.score -= MainScreen.CLICK_COST;
         m.repaint();
         m.scoreArea.setText("score: " + m.score);
     }
@@ -51,7 +51,7 @@ public class MyMouseListener implements MouseListener{
         
         if(game == 3)
             MainScreen.x3visible=true;
-        MainScreen.score -= 1;
+        MainScreen.score -= MainScreen.HOVER_COST;
         m.repaint();
         m.scoreArea.setText("score: " + m.score);
     }

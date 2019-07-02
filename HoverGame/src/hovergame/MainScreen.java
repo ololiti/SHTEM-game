@@ -31,6 +31,11 @@ public class MainScreen extends JFrame implements ActionListener{
     public static final int BOX_Y = 15;
     public static final int BOX_HEIGHT = 30;
     public static final int BOX_WIDTH = 200;
+    
+    public static final int MIN_POINTS = -1000;
+    public static final int OUT_OF_RANGE_COST = 100;
+    public static final int CLICK_COST = 10;
+    public static final int HOVER_COST = 1;
 
     private int points = 0;
     static int x1 = X;
@@ -120,20 +125,20 @@ public class MainScreen extends JFrame implements ActionListener{
             x2 += rand.nextInt(2*STEPSIZE)-STEPSIZE;
             x3 += rand.nextInt(2*STEPSIZE)-STEPSIZE;
             repaint();
-            if(x1 >= 350 || x1<= 150){
-                score -= 100;
+            if(x1 >= BOX_X+BOX_WIDTH || x1<= BOX_X){
+                score -= OUT_OF_RANGE_COST;
                 x1 = X;
                 scoreArea.setText("score: " + score);
                 repaint();
             }
-            if(x2 >= 350 || x2<= 150){
-                score -= 100;
+            if(x2 >= BOX_X+BOX_WIDTH || x2<= BOX_X){
+                score -= OUT_OF_RANGE_COST;
                 x2 = X;
                 scoreArea.setText("score: " + score);
                 repaint();
             }
-            if(x3 >= 350 || x3<= 150){
-                score -= 100;
+            if(x3 >= BOX_X+BOX_WIDTH || x3<= BOX_X){
+                score -= OUT_OF_RANGE_COST;
                 x3 = X;
                 scoreArea.setText("score: " + score);
                 repaint();
@@ -144,7 +149,7 @@ public class MainScreen extends JFrame implements ActionListener{
                 System.out.println("there was an error");
                 System.exit(0);
             }
-            if (score<-1000)
+            if (score < MIN_POINTS)
             {
                 int[] curTime = s.getTime();            
                 s.stopThread();
