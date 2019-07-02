@@ -17,7 +17,16 @@ public class HoverGame {
     public static void main(String[] args) {
         MainScreen main = new MainScreen();
         main.setVisible(true);
+        SimpleAudioPlayer s = null;
+        try{
+            s = new SimpleAudioPlayer("kahoot.wav");
+            s.play();
+        } catch (Exception e){
+            System.out.println("there was an exception: " + e );
+            System.exit(0);
+        }
         main.move();
+        s.pause();
         
     }
     

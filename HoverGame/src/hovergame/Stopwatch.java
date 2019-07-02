@@ -9,6 +9,7 @@ package hovergame;
  *
  * @author Aditi
  */
+//code copied from StackExchange: https://stackoverflow.com/questions/9526041/how-to-program-for-a-stopwatch
 public class Stopwatch extends Thread 
 {
     private long startTime;
