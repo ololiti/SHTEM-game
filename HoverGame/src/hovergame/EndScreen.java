@@ -30,7 +30,8 @@ public class EndScreen extends JFrame{
         instructions.setBackground(BACKGROUND);
         JTextArea instructionText = new JTextArea();
         instructionText.setFont(TEXT_FONT);
-        instructionText.setText("You reached -1000 points!\nYou lasted " + time + ".");
+        instructionText.setText("You reached " + MainScreen.MIN_POINTS + 
+                " points!\nYou lasted " + time + ".");
         instructionText.setLineWrap(true);
         instructionText.setEditable(false);
         instructions.add(instructionText,BorderLayout.CENTER);
