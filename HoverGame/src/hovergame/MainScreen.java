@@ -15,6 +15,7 @@ import java.awt.event.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Random;
+import java.io.*;
 public class MainScreen extends JFrame implements ActionListener{
     private static int size = 50;
     public static final int WIDTH = 500;
@@ -32,7 +33,7 @@ public class MainScreen extends JFrame implements ActionListener{
     public static final int BOX_HEIGHT = 30;
     public static final int BOX_WIDTH = 200;
     
-    public static final int MIN_POINTS = -1000;
+    public static final int MIN_POINTS = -250;
     public static final int OUT_OF_RANGE_COST = 100;
     public static final int CLICK_COST = 10;
     public static final int HOVER_COST = 1;
@@ -49,6 +50,8 @@ public class MainScreen extends JFrame implements ActionListener{
     private boolean running = true;
     private boolean scheduled = false;
     JTextArea scoreArea;
+    
+    Stopwatch s;
 
     public MainScreen(){
         super("Hover Game");
@@ -117,7 +120,7 @@ public class MainScreen extends JFrame implements ActionListener{
     }
 
     public void move(){
-        Stopwatch s = new Stopwatch();
+        s = new Stopwatch();
         s.startThread();
         Random rand = new Random();
         while(running){

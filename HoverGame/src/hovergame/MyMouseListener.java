@@ -36,7 +36,10 @@ public class MyMouseListener implements MouseListener{
             case 3: MainScreen.x3 = X;
                     break;
         }
-        
+        int[] time = m.s.getTime();
+        HoverGame.pw.println(time[1]+":"+time[2]+"," + (m.x1 - m.X) +"," 
+                + (m.x2-m.X) + "," + (m.x3-m.X) + ", click, " + game + ", " + m.score);
+        HoverGame.pw.flush();
         MainScreen.score -= MainScreen.CLICK_COST;
         m.repaint();
         m.scoreArea.setText("score: " + m.score);
@@ -51,6 +54,10 @@ public class MyMouseListener implements MouseListener{
         
         if(game == 3)
             MainScreen.x3visible=true;
+        int[] time = m.s.getTime();
+        HoverGame.pw.println(time[1]+":"+time[2]+"," + (m.x1 - m.X) +"," 
+                + (m.x2 - m.X)+ "," + (m.x3 - m.X) + ", hover, " + game + ", " + m.score);
+        HoverGame.pw.flush();
         MainScreen.score -= MainScreen.HOVER_COST;
         m.repaint();
         m.scoreArea.setText("score: " + m.score);
