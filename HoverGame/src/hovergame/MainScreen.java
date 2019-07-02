@@ -39,7 +39,7 @@ public class MainScreen extends JFrame implements ActionListener{
     static boolean x1visible = false;
     static boolean x2visible = false;
     static boolean x3visible = false;
-    static int score =-900;
+    static int score =0;
 
     private boolean running = true;
     private boolean scheduled = false;
@@ -123,16 +123,19 @@ public class MainScreen extends JFrame implements ActionListener{
             if(x1 >= 350 || x1<= 150){
                 score -= 100;
                 x1 = X;
+                scoreArea.setText("score: " + score);
                 repaint();
             }
             if(x2 >= 350 || x2<= 150){
                 score -= 100;
                 x2 = X;
+                scoreArea.setText("score: " + score);
                 repaint();
             }
             if(x3 >= 350 || x3<= 150){
                 score -= 100;
                 x3 = X;
+                scoreArea.setText("score: " + score);
                 repaint();
             }
             try{
