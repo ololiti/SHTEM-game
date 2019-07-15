@@ -38,7 +38,12 @@ public class MainScreen extends JFrame implements ActionListener{
     public static final int CLICK_COST = 10;
     public static final int HOVER_COST = 1;
 
-    private int points = 0;
+    public static final int PANELS = 3;
+    
+    //to use in an array if i figure out how to make one
+    public static int[] xVals = new int[PANELS];
+    public static boolean[] visible = new boolean[PANELS];
+    
     static int x1 = X;
     static int x2 = X;
     static int x3 = X;
@@ -54,10 +59,11 @@ public class MainScreen extends JFrame implements ActionListener{
     Stopwatch s;
 
     public MainScreen(){
+        //creates the JFrame that runs the main screen
         super("Hover Game");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(5,1));
+        setLayout(new GridLayout(PANELS+2,1));
         setBackground(BACKGROUND);
 
         JPanel instructions = new JPanel();
@@ -72,14 +78,19 @@ public class MainScreen extends JFrame implements ActionListener{
         instructions.add(instructionText);
         add(instructions);
 
+        //there are three panels, which each have a box and a circle
+        //the circle is only visible when the mouse is hovering
+        //I don't like having separate variables instead of an array - maybe I'll
+        //change it to an array
         JPanel game1 = new JPanel(){
-            public void paintComponent(Graphics g){
+            public void paintComponent(Graphics g){ //this function repaints the moving ball
                 if (x1visible)
                     g.drawOval(x1, Y, DIAMETER, DIAMETER);
                 g.drawRect(BOX_X,BOX_Y, BOX_WIDTH,BOX_HEIGHT);
             }
         };
-        game1.addMouseListener(new MyMouseListener(1,this));
+        game1.addMouseListener(new MyMouseListener(1,this)); //adds a mouselistener that stores the
+                                                             //index of the panel
         add(game1);
         JPanel game2 = new JPanel(){
                 public void paintComponent(Graphics g){
@@ -100,6 +111,8 @@ public class MainScreen extends JFrame implements ActionListener{
         game3.addMouseListener(new MyMouseListener(3,this));
         add(game3);
 
+        //panel with a score display and an "end" button
+        //could add a stopwatch here too
         JPanel endPanel = new JPanel();
         endPanel.setBackground(BACKGROUND);
         endPanel.setLayout(new FlowLayout());
@@ -115,19 +128,26 @@ public class MainScreen extends JFrame implements ActionListener{
         add(endPanel);
     }
 
+    //this is only called when the mouse clicks the end button
     public void actionPerformed(ActionEvent e){
         running = false;
+        //boolean that flags the timer and move functions
     }
 
-    public void move(){
-        s = new Stopwatch();
+    public void move(){ //this function loops constantly until running is false
+        s = new Stopwatch(); //starts a stopwatch on a new thread
         s.startThread();
         Random rand = new Random();
         while(running){
+            //each ball takes a step and then the screen is repainted
             x1 += rand.nextInt(2*STEPSIZE)-STEPSIZE;
             x2 += rand.nextInt(2*STEPSIZE)-STEPSIZE;
             x3 += rand.nextInt(2*STEPSIZE)-STEPSIZE;
             repaint();
+            
+            //for each ball, if the ball is out of range,
+            //the player loses OUT_OF_RANGE_COST points and the ball
+            //moves back to the center
             if(x1 >= BOX_X+BOX_WIDTH || x1<= BOX_X){
                 score -= OUT_OF_RANGE_COST;
                 x1 = X;
@@ -147,16 +167,17 @@ public class MainScreen extends JFrame implements ActionListener{
                 repaint();
             }
             try{
-                Thread.sleep(TIME);
+                Thread.sleep(TIME); //wait TIME milliseconds before moving again
             }catch(Exception e){
                 System.out.println("there was an error");
                 System.exit(0);
             }
-            if (score < MIN_POINTS)
+            if (score < MIN_POINTS) //if the player lost
             {
                 int[] curTime = s.getTime();            
-                s.stopThread();
-                running=false;
+                s.stopThread(); //stop running the timer
+                running=false; //stop running the game
+                //switch to the end screen
                 EndScreen end= new EndScreen(curTime[1] + " minutes and " + curTime[2] + " seconds");
                 end.setVisible(true);
                 dispose();
